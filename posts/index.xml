@@ -1,0 +1,79 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>所有文章 - 南北</title>
+        <link>https://example.com/posts/</link>
+        <description>所有文章 | 南北</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 22 Mar 2022 13:18:18 &#43;0800</lastBuildDate><atom:link href="https://example.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>每日规划</title>
+    <link>https://example.com/daily/</link>
+    <pubDate>Sun, 20 Mar 2022 13:11:17 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://example.com/daily/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/img/dailyPlan-background.png" referrerpolicy="no-referrer">
+            </div>文章描述]]></description>
+</item><item>
+    <title>Paxos</title>
+    <link>https://example.com/paxos/</link>
+    <pubDate>Tue, 22 Mar 2022 13:18:18 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://example.com/paxos/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/img/paxos-background.png" referrerpolicy="no-referrer">
+            </div>Paxos 资料链接 https://zhuanlan.zhihu.com/p/31780743 https://www.cnblogs.com/linbingdong/p/6253479.html https://blog.openacid.com/algo/paxos/ chrome-extension://cdonnmffkdaoajfknoeeecmchibpmkmg/assets/pdf/web/viewer.html?file=https%3A%2F%2Fongardie.net%2Fstatic%2Fraft%2Fuserstudy%2Fpaxos.pdf 一、 背景问题 维基百科 Paxos 是莱斯利·兰伯特（Leslie Lamport），1990 年提出的一种基于消息传递且具有高度容错特性的]]></description>
+</item><item>
+    <title>网络基础知识</title>
+    <link>https://example.com/%E7%BD%91%E7%BB%9C/</link>
+    <pubDate>Sun, 20 Mar 2022 14:21:21 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://example.com/%E7%BD%91%E7%BB%9C/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/img/network-background.png" referrerpolicy="no-referrer">
+            </div>网络基础学习整理]]></description>
+</item><item>
+    <title>Npm 使用</title>
+    <link>https://example.com/npm/</link>
+    <pubDate>Sun, 20 Mar 2022 14:14:32 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://example.com/npm/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/img/npm-background.png" referrerpolicy="no-referrer">
+            </div>npm 包管理工具的使用学习]]></description>
+</item><item>
+    <title>Markdown</title>
+    <link>https://example.com/markdown/</link>
+    <pubDate>Sun, 20 Mar 2022 14:04:53 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://example.com/markdown/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/img/markdown-background.png" referrerpolicy="no-referrer">
+            </div>markdown写作学习]]></description>
+</item><item>
+    <title>SSH配置</title>
+    <link>https://example.com/ssh/</link>
+    <pubDate>Sun, 20 Mar 2022 13:56:33 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://example.com/ssh/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/img/ssh-background.png" referrerpolicy="no-referrer">
+            </div>文章描述]]></description>
+</item><item>
+    <title>投资概述</title>
+    <link>https://example.com/%E7%90%86%E8%B4%A2%E6%A6%82%E8%BF%B0/</link>
+    <pubDate>Sun, 20 Mar 2022 13:43:42 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://example.com/%E7%90%86%E8%B4%A2%E6%A6%82%E8%BF%B0/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/img/finance-background.png" referrerpolicy="no-referrer">
+            </div>投资理财的简要理解]]></description>
+</item><item>
+    <title>Kubernetes基础</title>
+    <link>https://example.com/kubernetes%E5%9F%BA%E7%A1%80/</link>
+    <pubDate>Sat, 19 Mar 2022 17:34:54 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://example.com/kubernetes%E5%9F%BA%E7%A1%80/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/img/k8s-background.png" referrerpolicy="no-referrer">
+            </div>]]></description>
+</item></channel>
+</rss>
