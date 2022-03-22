@@ -233,7 +233,7 @@
 <h4 id="phase-2">Phase 2.</h4>
 <p>​ (a) If the <strong>proposer</strong> receives a response to its <code>prepare</code> requests (numbered n) from a majority of <strong>acceptors</strong>, then it sends an <code>accept</code> request to each of those <strong>acceptors</strong> for a <code>proposal</code> numbered n with a value v, where v is the value of the highest-numbered <code>proposal</code> among the reponses, or is any value if the responses reported no <code>proposals</code>.</p>
 <p>​ (b) If an <strong>acceptor</strong> receives an <code>accept</code> request for a <code>proposal</code> numbered n, it accepts the <code>proposal</code> unless it has already responded to a <code>prepare</code> request having a number greater than n.</p>
-<img src="Paxos算法学习.assets/image-20220322110311770.png" alt="image-20220322110311770" style="zoom: 25%;" />
+<img src="/img/image-20220322110311770.png" alt="image-20220322110311770" style="zoom: 25%;" />
 <h3 id="四-safety">四、 Safety</h3>
 <ul>
 <li>Only a value that has been proposed may be chosen</li>
@@ -269,7 +269,7 @@
 <ul>
 <li>多个 proposer 同时运行时，各个 proposal 的编号交替增加，没有任何的 proposal 可以被成功接受</li>
 </ul>
-<img src="Paxos算法学习.assets/image-20220322110344605.png" alt="image-20220322110344605" style="zoom:25%;" />
+<img src="/img/image-20220322110344605.png" alt="image-20220322110344605" style="zoom:25%;" />
 <h5 id="解决">解决</h5>
 <ul>
 <li>随机延迟，停等（有点类似于 CSMA 解决冲突的思路）</li>
