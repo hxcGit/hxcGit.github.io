@@ -22,7 +22,7 @@
     <guid>https://example.com/paxos/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/img/paxos-background.png" referrerpolicy="no-referrer">
-            </div>Paxos 资料链接 https://zhuanlan.zhihu.com/p/31780743 https://www.cnblogs.com/linbingdong/p/6253479.html https://blog.openacid.com/algo/paxos/ chrome-extension://cdonnmffkdaoajfknoeeecmchibpmkmg/assets/pdf/web/viewer.html?file=https%3A%2F%2Fongardie.net%2Fstatic%2Fraft%2Fuserstudy%2Fpaxos.pdf 一、 背景问题 维基百科 Paxos 是莱斯利·兰伯特（Leslie Lamport），1990 年提出的一种基于消息传递且具有高度容错特性的]]></description>
+            </div>Paxos分布式算法学习]]></description>
 </item><item>
     <title>网络基础知识</title>
     <link>https://example.com/%E7%BD%91%E7%BB%9C/</link>
