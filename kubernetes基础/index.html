@@ -10,7 +10,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://example.com/kubernetes%E5%9F%BA%E7%A1%80/" /><meta property="og:image" content="https://example.com/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-03-19T17:34:54+08:00" />
-<meta property="article:modified_time" content="2022-03-19T17:34:54+08:00" />
+<meta property="article:modified_time" content="2022-03-30T16:56:27+08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://example.com/logo.png"/>
@@ -29,8 +29,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/example.com\/kubernetes%E5%9F%BA%E7%A1%80\/"
-        },"image": ["https:\/\/example.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","wordcount":  7823 ,
-        "url": "https:\/\/example.com\/kubernetes%E5%9F%BA%E7%A1%80\/","datePublished": "2022-03-19T17:34:54+08:00","dateModified": "2022-03-19T17:34:54+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        },"image": ["https:\/\/example.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","wordcount":  10803 ,
+        "url": "https:\/\/example.com\/kubernetes%E5%9F%BA%E7%A1%80\/","datePublished": "2022-03-19T17:34:54+08:00","dateModified": "2022-03-30T16:56:27+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "xxxx","logo": "https:\/\/example.com\/img\/avatar.png"},"author": {
                 "@type": "Person",
@@ -110,8 +110,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Kubernetes基础</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>南北</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/native-cloud/"><i class="far fa-folder fa-fw"></i>native cloud</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-19">2022-03-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 7823 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 16 分钟&nbsp;<span id="/kubernetes%E5%9F%BA%E7%A1%80/" class="leancloud_visitors" data-flag-title="Kubernetes基础">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-19">2022-03-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 10803 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 22 分钟&nbsp;<span id="/kubernetes%E5%9F%BA%E7%A1%80/" class="leancloud_visitors" data-flag-title="Kubernetes基础">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
         </div><div class="featured-image"><img
@@ -194,6 +194,28 @@
                 <li><a href="#二pod-间亲和性反亲和性约束-pod-标签而不是节点标签">二、Pod 间亲和性/反亲和性（约束 pod 标签而不是节点标签）</a></li>
               </ul>
             </li>
+          </ul>
+        </li>
+        <li><a href="#34-annotation">3.4 Annotation</a>
+          <ul>
+            <li><a href="#常用记录信息">常用记录信息</a></li>
+          </ul>
+        </li>
+        <li><a href="#35-taint-and-toleration">3.5 Taint and Toleration</a>
+          <ul>
+            <li><a href="#1-node-设置-taint">(1) Node 设置 taint</a></li>
+            <li><a href="#2-pod-设置-toleration">(2) Pod 设置 toleration</a></li>
+            <li><a href="#3-应用场景">(3) 应用场景</a></li>
+            <li><a href="#4-基于污点的驱逐">(4) 基于污点的驱逐</a></li>
+            <li><a href="#5-基于节点状态添加污点">(5) 基于节点状态添加污点</a></li>
+          </ul>
+        </li>
+        <li><a href="#36-垃圾收集">3.6 垃圾收集</a>
+          <ul>
+            <li><a href="#1-垃圾收集的资源类型">(1) 垃圾收集的资源类型</a></li>
+            <li><a href="#2-owner-和-dependent收供养者依赖者">(2) Owner 和 Dependent（收供养者，依赖者）</a></li>
+            <li><a href="#3-控制垃圾收集器删除-dependent">(3) 控制垃圾收集器删除 Dependent</a></li>
+            <li><a href="#4-对未使用容器和镜像的垃圾收集">(4) 对未使用容器和镜像的垃圾收集</a></li>
           </ul>
         </li>
       </ul>
@@ -1008,6 +1030,281 @@ partition
 </span></code></pre></td></tr></table>
 </div>
 </div><p><strong>实际应用：web 服务区与缓存 redis 尽可能放置在同一节点上</strong></p>
+<h3 id="34-annotation">3.4 Annotation</h3>
+<ul>
+<li>Annotation-注解。可以为 K8S 资源对象添加任意的非标识性元数据。</li>
+<li>这些元数据可以理解为记录了一些备注信息，与 label 不同点在于，label 主要用于标识且选择对象。</li>
+</ul>
+<h4 id="常用记录信息">常用记录信息</h4>
+<ol>
+<li>由声明性配置所管理的字段。 将这些字段附加为注解，能够将它们与客户端或服务端设置的默认值、 自动生成的字段以及通过自动调整大小或自动伸缩系统设置的字段区分开来。</li>
+<li>构建、发布或镜像信息（如时间戳、发布 ID、Git 分支、PR 数量、镜像哈希、仓库地址）。</li>
+<li>指向日志记录、监控、分析或审计仓库的指针。</li>
+</ol>
+<ul>
+<li>可用于调试目的的客户端库或工具信息：例如，名称、版本和构建信息。</li>
+<li>用户或者工具/系统的来源信息，例如来自其他生态系统组件的相关对象的 URL。</li>
+<li>轻量级上线工具的元数据信息：例如，配置或检查点。</li>
+<li>负责人员的电话或呼机号码，或指定在何处可以找到该信息的目录条目，如团队网站。</li>
+<li>从用户到最终运行的指令，以修改行为或使用非标准功能。</li>
+</ul>
+<h3 id="35-taint-and-toleration">3.5 Taint and Toleration</h3>
+<ul>
+<li>具有<code>taint</code>的 node 和 pod 是互斥关系；具有节点亲和性关系的 node 和 pod 是相吸关系</li>
+<li>每个节点可以应用<strong>一个或多个</strong>taint</li>
+<li>如果设置了 taint，那些不能容忍该 taint 的 pod，不会被该节点接受；如果将 toleration 应用在 pod 上，则表示这些 pod 可以被调度到具有相应 taint 的节点上</li>
+</ul>
+<h4 id="1-node-设置-taint">(1) Node 设置 taint</h4>
+<ul>
+<li>见命令章节</li>
+</ul>
+<h4 id="2-pod-设置-toleration">(2) Pod 设置 toleration</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="c"># spec 中 设置toleration字段</span><span class="w">
+</span><span class="w"></span><span class="nt">toleration</span><span class="p">:</span><span class="w">
+</span><span class="w"></span>- <span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;key1&#34;</span><span class="w">
+</span><span class="w">	</span><span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Equal&#34;</span><span class="w">
+</span><span class="w">	</span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;value1&#34;</span><span class="w">
+</span><span class="w">	</span><span class="nt">effect</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;NoSchedule&#34;</span><span class="w">
+</span><span class="w"></span>- <span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;node.alpha.kubernetes.io/unreachable&#34;</span><span class="w">
+</span><span class="w">	</span><span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Exists&#34;</span><span class="w">
+</span><span class="w">	</span><span class="nt">effect</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;NoExecute&#34;</span><span class="w">
+</span><span class="w">	</span><span class="nt">tolerationSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">6000</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p><strong>operator</strong></p>
+<ul>
+<li>taint 和 toleration 相匹配是指具有一样的 key 和 effect
+<ul>
+<li>如果<code>operator</code>是<code>Exists</code>，则<code>key</code>和<code>effect</code>相同即可</li>
+<li>如果<code>operator</code>是<code>Equal</code>，则<code>key</code>,<code>effect</code>和<code>value</code>都需要一样</li>
+</ul>
+</li>
+</ul>
+<p><strong>特殊情况</strong></p>
+<ul>
+<li>如果<code>key</code>为空，且<code>operator</code>为<code>Exists</code>，表示该 toleration 能容忍任意的 taint</li>
+<li>如果<code>effect</code>为空，则该 toleration 可以与任意的键名相同的<code>effect</code>相匹配</li>
+</ul>
+<p><strong>效果</strong></p>
+<ul>
+<li><code>NoSchedule</code>: 不会将 Pod 分配到该节点</li>
+<li><code>PreferNoSchedule</code>：尝试尽量不将 Pod 分配到该节点</li>
+<li><code>NoExecute</code>: 不会将 Pod 分配到该节点，或者将 Pod 从该节点驱逐
+<ul>
+<li>此时，<code>tolerationSeconds</code>表明了该 Pod 还能继续在节点上运行的时间</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-应用场景">(3) 应用场景</h4>
+<ol>
+<li><strong>专用节点</strong>
+<ul>
+<li>将某些节点专门分配给特定的一组用户使用</li>
+<li><code>kubectl taint nodes nodename dedicated=groupName:NoSchedule</code></li>
+<li>该方案只能使得不是该 group 的 pod 不被分配到这些专用节点上运行，如果想让该 group 的 pod 只在这些专用节点上运行，可以配合 lable 一起使用</li>
+</ul>
+</li>
+<li><strong>配置特殊硬件的节点</strong>
+<ul>
+<li>比如 GPU 资源</li>
+<li><code>kubecl taint nodes nodename special=true:NoSchedule</code></li>
+</ul>
+</li>
+<li><strong>基于污点的驱逐</strong>
+<ul>
+<li>每个 Pod 中配置的当节点出现问题时的驱逐行为</li>
+</ul>
+</li>
+</ol>
+<p>上述的专用节点和配置特殊硬件的节点等应用场景中可以用到<strong>准入控制器</strong></p>
+<h4 id="4-基于污点的驱逐">(4) 基于污点的驱逐</h4>
+<ul>
+<li>某种条件为真时，节点控制器会自动给节点添加污点，这些内置的污点包括
+<ol>
+<li><code>node.kubernetes.io/not-ready</code> : 节点未准备好，相当于节点的<code>Ready</code>状态时<code>False</code></li>
+<li><code>node.kubernetes.io/unreachable</code>: 节点控制器访问不到节点，相当于节点的<code>Ready</code>状态为<code>Unkonwn</code></li>
+<li><code>node.kubernetes.io/memory-pressure</code>: 节点存在内存压力</li>
+<li><code>node.kubernetes.io/disk-pressure</code>: 节点存在磁盘压力</li>
+<li><code>node.kubernetes.io/pid-pressure</code>: 节点存在 PID 压力</li>
+<li><code>node.kubernetes.io/network-unavilable</code>: 节点网络不可用</li>
+<li><code>node.kubernetes.io/unschedulable</code>: 节点不可调度</li>
+<li><code>node.cloudprovider.kubernetes.io/uninitialized</code>: 外部云平台驱动，给节点添加了一个污点标志为不可用</li>
+</ol>
+</li>
+<li>K8S 会自动给 Pod 添加一个 key 为<code>node.kubernetes.io/not-ready</code>的容忍度，并配置<code>toleration=300</code>,除非用户的 Pod 配置中已经设置了该项</li>
+<li>同样，K8S 也会设置<code>unreachable</code>中<code>toleration=300</code>,即相关问题被检测出后，Pod 能够继续在当前节点运行 5 分钟</li>
+</ul>
+<h4 id="5-基于节点状态添加污点">(5) 基于节点状态添加污点</h4>
+<p>控制平面使用<strong>节点控制器</strong>自动创建于<strong>节点状况</strong>对应的带有<code>NoSchedule</code>的污点</p>
+<ul>
+<li>调度器在进行调度时检查污点，而不是检查节点状况。</li>
+<li>DemonSet 控制器为 Pod 添加的容忍度包括<code>memory-pressure</code>,<code>disk-pressure</code>,<code>pid-pressure</code>,<code>unschedulable</code>,<code>network-navailable</code></li>
+</ul>
+<h3 id="36-垃圾收集">3.6 垃圾收集</h3>
+<h4 id="1-垃圾收集的资源类型">(1) 垃圾收集的资源类型</h4>
+<ul>
+<li>
+<p><a href="https://kubernetes.io/zh/docs/concepts/workloads/pods/pod-lifecycle/#pod-garbage-collection" target="_blank" rel="noopener noreffer">失败的 Pod</a></p>
+</li>
+<li>
+<p><a href="https://kubernetes.io/zh/docs/concepts/workloads/controllers/ttlafterfinished/" target="_blank" rel="noopener noreffer">已完成的 Job</a></p>
+</li>
+<li>
+<p><a href="https://kubernetes.io/zh/docs/concepts/architecture/garbage-collection/#owners-dependents" target="_blank" rel="noopener noreffer">不再存在属主引用的对象</a></p>
+</li>
+<li>
+<p><a href="https://kubernetes.io/zh/docs/concepts/architecture/garbage-collection/#containers-images" target="_blank" rel="noopener noreffer">未使用的容器和容器镜像</a></p>
+</li>
+<li>
+<p><a href="https://kubernetes.io/zh/docs/concepts/storage/persistent-volumes/#delete" target="_blank" rel="noopener noreffer">动态制备的、StorageClass 回收策略为 Delete 的 PV 卷</a></p>
+</li>
+<li>
+<p><a href="https://kubernetes.io/zh/docs/reference/access-authn-authz/certificate-signing-requests/#request-signing-process" target="_blank" rel="noopener noreffer">阻滞或者过期的 CertificateSigningRequest (CSRs)</a></p>
+</li>
+<li>
+<p>在以下情形中删除了的</p>
+<p>节点</p>
+<p>对象：</p>
+<ul>
+<li>当集群使用<a href="https://kubernetes.io/zh/docs/concepts/architecture/cloud-controller/" target="_blank" rel="noopener noreffer">云控制器管理器</a>运行于云端时；</li>
+<li>当集群使用类似于云控制器管理器的插件运行在本地环境中时。</li>
+</ul>
+</li>
+<li>
+<p><a href="https://kubernetes.io/zh/docs/concepts/architecture/nodes/#heartbeats" target="_blank" rel="noopener noreffer">节点租约对象</a></p>
+</li>
+</ul>
+<h4 id="2-owner-和-dependent收供养者依赖者">(2) Owner 和 Dependent（收供养者，依赖者）</h4>
+<ul>
+<li>具有 Owner 的对象被称为是 Owner 的 Dependent，例如一个 ReplicaSet 是一组 Pod 的 Owner</li>
+<li>每个 Dependent 对象具有一个指向其所属对象的<code>metadata.ownerReferences</code>字段</li>
+</ul>
+<p>通过<code>kubectl get pods coredns-558bd4d5db-45f7v -n kube-system --output=yaml</code>查看 metadata 中的<code>ownerReference</code>信息</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Pod</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">creationTimestamp</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;2022-03-14T07:51:26Z&#39;</span><span class="w">
+</span><span class="w">  </span><span class="nt">generateName</span><span class="p">:</span><span class="w"> </span><span class="l">coredns-558bd4d5db-</span><span class="w">
+</span><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">k8s-app</span><span class="p">:</span><span class="w"> </span><span class="l">kube-dns</span><span class="w">
+</span><span class="w">    </span><span class="nt">pod-template-hash</span><span class="p">:</span><span class="w"> </span><span class="l">558bd4d5db</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">coredns-558bd4d5db-45f7v</span><span class="w">
+</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">kube-system</span><span class="w">
+</span><span class="w">  </span><span class="nt">ownerReferences</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apps/v1</span><span class="w">
+</span><span class="w">      </span><span class="nt">blockOwnerDeletion</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">      </span><span class="nt">controller</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">      </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">ReplicaSet</span><span class="w">
+</span><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">coredns-558bd4d5db</span><span class="w">
+</span><span class="w">      </span><span class="nt">uid</span><span class="p">:</span><span class="w"> </span><span class="l">2dc8bfca-ac8f-4e24-a64b-f5c79860e862</span><span class="w">
+</span><span class="w">  </span><span class="nt">resourceVersion</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;724&#39;</span><span class="w">
+</span><span class="w">  </span><span class="nt">uid</span><span class="p">:</span><span class="w"> </span><span class="l">db321d22-df72-40da-a667-64b2183ecac5</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><h4 id="3-控制垃圾收集器删除-dependent">(3) 控制垃圾收集器删除 Dependent</h4>
+<p>当删除对象时，可以指定是否该对象的 Dependent 也自动删除掉。自动删除 Dependent 也称为<strong>级联删除</strong>。</p>
+<ul>
+<li>K8S 有两种<strong>级联删除</strong>模式：<strong>background 模式</strong>和<strong>foreground 模式</strong></li>
+<li>如果删除对象时，不自动删除它的 Dependent，这些 Dependent 被称作是原对象的<strong>孤儿(Orphaned)</strong></li>
+</ul>
+<p><strong>1. Background 级联删除</strong></p>
+<ul>
+<li>
+<p>默认情况下，K8S 使用<strong>background</strong>的级联删除方案，除非手动设置了使用<strong>foreground</strong>或者选择<strong>遗弃 dependent 对象</strong></p>
+</li>
+<li>
+<p>K8S 会立即删除 Owner 对象，然后垃圾收集器会在后台删除这些 Dependent</p>
+</li>
+</ul>
+<p><strong>2. Foreground 级联删除</strong></p>
+<ul>
+<li>
+<p>被删除的 Owner 首先进入<code>deletion in progress</code>状态，Ower 对象将会</p>
+<ul>
+<li>
+<p>K8S 将 Owner 的<code>metadata.deletionTimestamp</code>字段设置为对象被标记为要删除的时间点</p>
+</li>
+<li>
+<p>K8S 将 Owner 的<code>metadata.finalizers</code>字段设置为<code>foregroundDeletion</code></p>
+</li>
+<li>
+<p>在<code>deletion in progress</code>删除过程完成之前，K8S API 还是可以看到该对象的</p>
+</li>
+</ul>
+</li>
+<li>
+<p>当 Owner 进入<code>deletion in progress</code>状态之后，控制器开始删除 Owner 的 Dependent，删除完依赖对象之后，删除 Owner 对象，这时，就无法通过 K8S API 查看到该对象</p>
+</li>
+<li>
+<p>Dependent 对象如果带有<code>ownerReference.blockOwnerDeletion=true</code>字段，则可能会阻塞 Owner 对象被删除。[https://kubernetes.io/zh/docs/tasks/administer-cluster/use-cascading-deletion/#use-foreground-cascading-deletion]</p>
+</li>
+</ul>
+<h4 id="4-对未使用容器和镜像的垃圾收集">(4) 对未使用容器和镜像的垃圾收集</h4>
+<ul>
+<li><code>kubelet</code>会每五分钟对未使用的镜像执行一次垃圾收集；每一分钟对未使用的容器执行一次垃圾收集</li>
+<li>如果想要自定义对容器和镜像的垃圾收集选项，可以配置一个<a href="https://kubernetes.io/zh/docs/tasks/administer-cluster/kubelet-config-file/" target="_blank" rel="noopener noreffer">配置文件</a>,基于<code>KubeletConfiguration</code>资源类型来调整与垃圾收集相关的 kubelet 行为；由于 kubelet 对容器和镜像会有垃圾回收相关的管理，所以不推荐使用外部的第三方垃圾收集工具。</li>
+</ul>
+<ol>
+<li>容器镜像生命周期
+<ul>
+<li>K8S 通过镜像管理器（Image Manager）来管理所有镜像的生命周期，Image Manager 是 Kubelet 的一部分，工作时需要与<font color='red'>cadvisor</font>协作</li>
+<li>kubelet 垃圾收集时的考虑因素包括<code>HighThresholdPercent</code>,<code>LowThresholdPercent</code>
+<ul>
+<li>如果磁盘用量超出配置等<code>High</code>时会触发垃圾收集，垃圾收集器会基于镜像上次使用的时间来按顺序删除镜像，kubelet 会持续删除镜像，直到磁盘用量达到<code>low</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>容器垃圾收集
+<ul>
+<li>kubelet 会基于如下变量对容器执行垃圾收集，这些变量可以手动定义
+<ul>
+<li><code>MinAge</code>: 当容器年龄大于该值时 kubelet 才可以垃圾回收该容器</li>
+<li><code>MaxPerPodContainer</code> ： 每个 Pod 可以包含的已死亡的容器数量上限</li>
+<li><code>MaxContainers</code> ： 集群中可以存在的已死亡的容器数量上限</li>
+</ul>
+</li>
+<li><code>MaxPerPodContainer</code>和<code>MaxContainers</code>可能冲突，冲突时通过调整<code>MaxPerPodContainer</code>来解决</li>
+</ul>
+</li>
+</ol>
 <h2 id="四控制器">四、控制器</h2>
 <h3 id="41-deployment">4.1 Deployment</h3>
 <ul>
@@ -1183,7 +1480,7 @@ kubectl config set-context kubernetes &ndash;cluster=kubernetes &ndash;user=admi
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2022-03-19</span>
+                <span>更新于 2022-03-30</span>
             </div>
             <div class="post-info-license"></div>
         </div>
