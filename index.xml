@@ -3,7 +3,7 @@
         <title>南北</title>
         <link>https://example.com/</link>
         <description>南北的个人博客</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 22 Mar 2022 13:18:18 &#43;0800</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 01 Apr 2022 22:08:54 &#43;0800</lastBuildDate>
             <atom:link href="https://example.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
     <title>每日规划</title>
@@ -14,6 +14,33 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/img/dailyPlan-background.png" referrerpolicy="no-referrer">
             </div>文章描述]]></description>
+</item><item>
+    <title>git</title>
+    <link>https://example.com/git/</link>
+    <pubDate>Fri, 01 Apr 2022 22:08:54 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://example.com/git/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/img/git-background.png" referrerpolicy="no-referrer">
+            </div>git首页]]></description>
+</item><item>
+    <title>git忽略文件</title>
+    <link>https://example.com/git%E5%BF%BD%E7%95%A5%E6%96%87%E4%BB%B6/</link>
+    <pubDate>Fri, 01 Apr 2022 22:08:54 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://example.com/git%E5%BF%BD%E7%95%A5%E6%96%87%E4%BB%B6/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/img/git-background.png" referrerpolicy="no-referrer">
+            </div>git ignore相关内容]]></description>
+</item><item>
+    <title>git标签</title>
+    <link>https://example.com/git%E6%A0%87%E7%AD%BE/</link>
+    <pubDate>Fri, 01 Apr 2022 22:08:54 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://example.com/git%E6%A0%87%E7%AD%BE/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/img/git-background.png" referrerpolicy="no-referrer">
+            </div>git标签相关内容]]></description>
 </item><item>
     <title>Paxos</title>
     <link>https://example.com/paxos/</link>
@@ -68,14 +95,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/img/finance-background.png" referrerpolicy="no-referrer">
             </div>投资理财的简要理解]]></description>
-</item><item>
-    <title>Kubernetes基础</title>
-    <link>https://example.com/kubernetes%E5%9F%BA%E7%A1%80/</link>
-    <pubDate>Sat, 19 Mar 2022 17:34:54 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://example.com/kubernetes%E5%9F%BA%E7%A1%80/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/img/k8s-background.png" referrerpolicy="no-referrer">
-            </div>]]></description>
 </item></channel>
 </rss>
