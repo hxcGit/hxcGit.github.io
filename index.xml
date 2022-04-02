@@ -3,7 +3,7 @@
         <title>南北</title>
         <link>https://example.com/</link>
         <description>南北的个人博客</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 01 Apr 2022 22:08:54 &#43;0800</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 02 Apr 2022 14:01:15 &#43;0800</lastBuildDate>
             <atom:link href="https://example.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
     <title>每日规划</title>
@@ -14,6 +14,24 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/img/dailyPlan-background.png" referrerpolicy="no-referrer">
             </div>文章描述]]></description>
+</item><item>
+    <title>Go读写锁</title>
+    <link>https://example.com/go%E8%AF%BB%E5%86%99%E9%94%81/</link>
+    <pubDate>Sat, 02 Apr 2022 14:01:15 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://example.com/go%E8%AF%BB%E5%86%99%E9%94%81/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/img/go-background.png" referrerpolicy="no-referrer">
+            </div>]]></description>
+</item><item>
+    <title>git信息比较</title>
+    <link>https://example.com/git%E4%BF%A1%E6%81%AF%E6%AF%94%E8%BE%83/</link>
+    <pubDate>Fri, 01 Apr 2022 23:01:54 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://example.com/git%E4%BF%A1%E6%81%AF%E6%AF%94%E8%BE%83/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/img/git-background.png" referrerpolicy="no-referrer">
+            </div>git信息比较]]></description>
 </item><item>
     <title>git</title>
     <link>https://example.com/git/</link>
@@ -32,6 +50,15 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/img/git-background.png" referrerpolicy="no-referrer">
             </div>git ignore相关内容]]></description>
+</item><item>
+    <title>git撤销</title>
+    <link>https://example.com/git%E6%92%A4%E9%94%80/</link>
+    <pubDate>Fri, 01 Apr 2022 22:08:54 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://example.com/git%E6%92%A4%E9%94%80/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/img/git-background.png" referrerpolicy="no-referrer">
+            </div>git撤销]]></description>
 </item><item>
     <title>git标签</title>
     <link>https://example.com/git%E6%A0%87%E7%AD%BE/</link>
@@ -68,32 +95,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/img/npm-background.png" referrerpolicy="no-referrer">
             </div>npm 包管理工具的使用学习]]></description>
-</item><item>
-    <title>Markdown</title>
-    <link>https://example.com/markdown/</link>
-    <pubDate>Sun, 20 Mar 2022 14:04:53 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://example.com/markdown/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/img/markdown-background.png" referrerpolicy="no-referrer">
-            </div>markdown写作学习]]></description>
-</item><item>
-    <title>SSH配置</title>
-    <link>https://example.com/ssh/</link>
-    <pubDate>Sun, 20 Mar 2022 13:56:33 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://example.com/ssh/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/img/ssh-background.png" referrerpolicy="no-referrer">
-            </div>文章描述]]></description>
-</item><item>
-    <title>投资概述</title>
-    <link>https://example.com/%E7%90%86%E8%B4%A2%E6%A6%82%E8%BF%B0/</link>
-    <pubDate>Sun, 20 Mar 2022 13:43:42 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://example.com/%E7%90%86%E8%B4%A2%E6%A6%82%E8%BF%B0/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/img/finance-background.png" referrerpolicy="no-referrer">
-            </div>投资理财的简要理解]]></description>
 </item></channel>
 </rss>
