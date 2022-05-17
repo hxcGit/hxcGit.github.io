@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>GRPC - 南北</title><meta name="Description" content="gRPC调研"><meta property="og:title" content="GRPC" />
+<meta property="og:description" content="gRPC调研" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.com/grpc/" /><meta property="og:image" content="https://example.com/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-17T14:58:15+08:00" />
+<meta property="article:modified_time" content="2022-05-17T16:14:06+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://example.com/logo.png"/>
+
+<meta name="twitter:title" content="GRPC"/>
+<meta name="twitter:description" content="gRPC调研"/>
+<meta name="application-name" content="南北你好">
+<meta name="apple-mobile-web-app-title" content="南北你好"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://example.com/grpc/" /><link rel="prev" href="https://example.com/go%E8%AF%BB%E5%86%99%E9%94%81/" /><link rel="next" href="https://example.com/daily/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "GRPC",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/example.com\/grpc\/"
+        },"image": ["https:\/\/example.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "RPC, HTTP2","wordcount":  3916 ,
+        "url": "https:\/\/example.com\/grpc\/","datePublished": "2022-05-17T14:58:15+08:00","dateModified": "2022-05-17T16:14:06+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": "https:\/\/example.com\/img\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "南北"
+            },"description": "gRPC调研"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="南北"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>南北</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/categories/documentation/"> 文档 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/hxcGit" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/grpc/" selected>简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="南北"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>南北</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/categories/documentation/" title="">文档</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/hxcGit" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/grpc/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">GRPC</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>南北</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/native-cloud/"><i class="far fa-folder fa-fw"></i>native cloud</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-17">2022-05-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3916 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id="/grpc/" class="leancloud_visitors" data-flag-title="GRPC">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/img/grpc-background.png"
+        data-srcset="/img/grpc-background.png, /img/grpc-background.png 1.5x, /img/grpc-background.png 2x"
+        data-sizes="auto"
+        alt="/img/grpc-background.png"
+        title="gRPC调研" /></div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#初探">初探</a>
+      <ul>
+        <li><a href="#起源">起源</a></li>
+        <li><a href="#一-基本概念">一、 基本概念</a>
+          <ul>
+            <li><a href="#11-服务定义">1.1 服务定义</a></li>
+            <li><a href="#12-基本流程">1.2 基本流程</a>
+              <ul>
+                <li><a href="#服务端">服务端</a></li>
+                <li><a href="#客户端">客户端</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#二-对比方案">二、 对比方案</a>
+          <ul>
+            <li><a href="#21-rest">2.1 REST</a>
+              <ul>
+                <li><a href="#1-消息传递低效">(1) 消息传递低效</a></li>
+                <li><a href="#2-缺乏强类型接口">(2) 缺乏强类型接口</a></li>
+              </ul>
+            </li>
+            <li><a href="#22-thrift">2.2 Thrift</a></li>
+            <li><a href="#23-graphql">2.3 GraphQL</a></li>
+            <li><a href="#24-grpc-优势">2.4 gRPC 优势</a>
+              <ul>
+                <li><a href="#1-通信效率高">(1) 通信效率高</a></li>
+                <li><a href="#2-服务接口简单">(2) 服务接口简单</a></li>
+                <li><a href="#3-支持多语言">(3) 支持多语言</a></li>
+                <li><a href="#4-支持双工流">(4) 支持双工流</a></li>
+              </ul>
+            </li>
+            <li><a href="#25-grpc-劣势">2.5 gRPC 劣势</a>
+              <ul>
+                <li><a href="#1-不适合面向外部的服务">(1) 不适合面向外部的服务</a></li>
+                <li><a href="#2-服务定义变更复杂">(2) 服务定义变更复杂</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#三-通信模式">三、 通信模式</a>
+          <ul>
+            <li><a href="#1-一元-rpc-模式">(1) 一元 RPC 模式</a></li>
+            <li><a href="#2-服务端客户端单向流模式">(2) 服务端、客户端单向流模式</a></li>
+            <li><a href="#3-双向流-rpc-模式">(3) 双向流 RPC 模式</a></li>
+          </ul>
+        </li>
+        <li><a href="#四底层原理">四、底层原理</a></li>
+        <li><a href="#五-相关配置">五、 相关配置</a></li>
+        <li><a href="#六-其他">六、 其他</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="初探">初探</h2>
+<p>  最近接触到了开源之夏这个活动，其中有个项目是构建一个基于 gRPC 的轻量化插件方案。之前学习 RPC 时曾经了解过 gRPC 的相关内容，并尝试了简单的 demo 程序，但是没有深入窥探其内在机理与核心。借此次机会，对 gRPC 这个当下异常火爆的远程过程调用系统进行再探，希望能够究其根本。以下记录了该次的调研内容。</p>
+<p><code>*No silver Bullet*</code></p>
+<p>​ <font size="2">查询资料时，发现了一个非常有意思的词——“银弹”。之前好像确实听过这么一个说法，又忽然见到，像是重逢却想不起来她的名字。只好尴尬地再问一次：您是？其实“Silver Bullet“是 Fred Brooks 在 1987 年发表的”Essence and Accidents of Software Engineering“论文提及了该说法。深究来说，该说法应该源于美国的狼人故事，即狼人会在月圆之夜变身，而 silver bullet 则是可以迅速 kill 狼人的武器。这里，银弹就被引申成“解决复杂问题良方”的意思，那么作者其实是认为&quot;There is no silver bullet !&quot; 具体作者为啥如此说，之后可能需要具体看看论文以及其《人月神话》了～</font>
+ </p>
+<h3 id="起源">起源</h3>
+<p>​  gRPC 起源于谷歌(真有那么强吗？k8s 也是)，在此之前谷歌使用的是另一个叫做 stubby 的通用 RPC 框架，用来连接内部跨越数据中心的众多异构微服务，stubby 核心 RPC 层每秒能处理数百亿次的请求，但是 stubby 与谷歌内部耦合太强，所以谷歌开源了 gRPC——一个类似于 stubby 的 RPC 框架。（为何要开源内部的项目？这可能是一个非常值得探究的问题，对于商业企业开源究竟有何好处？可能还需要我多多接触开源、多多旁听才有收获）</p>
+<p>​  总之，2015 年 gRPC 开源，这个 gRPC 框架相比 stubby 更加通用，同时兼顾跨平台、可扩展以及性能高效等等特点。此后，gRPC 大受欢迎，并且加入了 CNCF，也由此获得了巨大发展动力。（其实 gRPC 框架非常火热背后没准靠的也有谷歌背书的成分，最近也有看到知乎贾扬清的回答：国内开源项目大多靠开源项目的母公司来推动、运营；国外开源项目大多靠社区本身、项目贡献者等等来推动发展。这里看来也不完全这样，大多数可能更是二者的结合）。</p>
+<p> 
+ </p>
+<h3 id="一-基本概念">一、 基本概念</h3>
+<p>​  了解了 gRPC 的起源之后，就该学习 gRPC 的具体内容啦。首先，gRPC 实质是进程间通信技术，可以在分布式异构应用间进行远程服务调用，就像调用本地函数一样。在开发 gRPC 应用时，需要先定义服务接口，其中应该包含消费者消费服务的方式、消费者可以远程调用的方法以及调用这些方法需要使用的参数和消息格式，定义服务所使用的语言称为接口定义语言（Interface definition language，IDL）。</p>
+<h4 id="11-服务定义">1.1 服务定义</h4>
+<p>​  gRPC 使用<code>protocol buffers</code>作为 IDL 来定义接口服务。<code>Protocol buffers</code>是一种语言中立、平台无关以及数据结构化的数据序列化机制（序列化其实就是将内存中的变量变为可存储或可传输的过程）。其实这里还对应了<code>marshal</code>与<code>unmarshal</code>两个动作，<code>marshal</code>是将 RPC 的请求转换成对应的 pb 格式；<code>unmarshal</code>将相应的二进制 pb 又转换成过程调用。</p>
+<p>​  服务接口一般定义在<code>proto</code>文件中，同时我们可以通过 gRPC 相关的插件来根据<code>proto</code>文件生成代码，go 一般可以使用工具<code>protoc-gen-go</code>。此外在服务定义时，用户定义的类型中每个字段都需要具有唯一的编号名（比如 string id = 1），这样做的目的是在二进制形式的消息中，可以通过编号来识别相应的字段。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-protobuf" data-lang="protobuf"><span class="c1">// 结构一般如下
+</span><span class="c1"></span><span class="n">syntax</span> <span class="o">=</span> <span class="s">&#34;proto3&#34;</span><span class="p">;</span> <span class="c1">// 一般采用version 3
+</span><span class="c1"></span><span class="kn">package</span> <span class="o">...</span>        <span class="c1">// 可以通过包名来防止协议消息类型之间发生命名冲突
+</span><span class="c1"></span><span class="err">
+</span><span class="err"></span><span class="kd">service</span> <span class="n">foo</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>	<span class="k">rpc</span> <span class="n">add</span><span class="p">(</span><span class="n">Bar</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">BarID</span><span class="p">);</span><span class="err">
+</span><span class="err"></span>	<span class="k">rpc</span> <span class="n">get</span><span class="p">(</span><span class="n">BarID</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">Bar</span><span class="p">);</span><span class="err">
+</span><span class="err"></span><span class="p">}</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="kd">message</span> <span class="nc">Bar</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>	<span class="kt">string</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="err">
+</span><span class="err"></span>	<span class="kt">string</span> <span class="n">name</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span><span class="err">
+</span><span class="err"></span><span class="p">}</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="kd">message</span> <span class="nc">BarID</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>	<span class="kt">string</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="err">
+</span><span class="err"></span><span class="p">}</span><span class="err">
+</span></code></pre></td></tr></table>
+</div>
+</div><p> </p>
+<h4 id="12-基本流程">1.2 基本流程</h4>
+<h5 id="服务端">服务端</h5>
+<ol>
+<li>实现 gRPC 服务接口，生成服务端 skeleton 的逻辑。</li>
+<li>注册服务到 gRPC 服务器。</li>
+<li>运行 gRPC 服务器，监听来自客户端的请求并返回响应。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/img/gRPC%e6%9e%b6%e6%9e%84%e5%9b%be.png"
+        data-srcset="/img/gRPC%e6%9e%b6%e6%9e%84%e5%9b%be.png, /img/gRPC%e6%9e%b6%e6%9e%84%e5%9b%be.png 1.5x, /img/gRPC%e6%9e%b6%e6%9e%84%e5%9b%be.png 2x"
+        data-sizes="auto"
+        alt="/img/gRPC架构图.png"
+        title="image-20220220225409792" /></p>
+<h5 id="客户端">客户端</h5>
+<ol>
+<li>建立与远程服务器的连接</li>
+<li>将客户端 stub 与 gRPC 连接关联</li>
+<li>通过客户端 stub 调用远程方法</li>
+</ol>
+<p> 
+ </p>
+<h3 id="二-对比方案">二、 对比方案</h3>
+<p>​  gRPC 虽说感觉非常高大上，其实也只是众多进程间通信方式的一种，如果想更好的理解 What gRPC、Why gRPH、How gRPC，最好的办法就是看看类似的解决方案。刚好网上关于对比解决方案的介绍也很多，就大概浏览一下。
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/img/image-20220517161139759.png"
+        data-srcset="/img/image-20220517161139759.png, /img/image-20220517161139759.png 1.5x, /img/image-20220517161139759.png 2x"
+        data-sizes="auto"
+        alt="/img/image-20220517161139759.png"
+        title="image-20220517161139759" /></p>
+<h4 id="21-rest">2.1 REST</h4>
+<p>​  <strong>描述性状态迁移（Representational state transfer，REST</strong>最早由 Roy Fielding 的博士论文提出，是一种面向资源的思想。使用 REST 的系统中，将应用程序建模成资源的集合，客户端可以查询、变更这些资源的状态。</p>
+<p>​  在常见的业界解决方案中，RESTful/HTTP + JSON 是一种标准的服务提供方式。资源的操作可以通过 HTTP 相关操作（GET、POST、PUT、DELETE、PATCH）提供，媒体类型（MIME）可以有 JSON、XML、YAML 等等。</p>
+<p>​  虽然 RESTful+JSON 风格的服务方式已经非常成熟且常见，但是确实也存在一些问题，而这也是 gRPC 或者 RPC 框架逐渐被应用的原因之一。以下调研了一些常见的缺陷：</p>
+<h5 id="1-消息传递低效">(1) 消息传递低效</h5>
+<p>​  RESTful 风格的服务是基于 HTTP 的文本传输协议，这些传输信息虽然采用的是可读的文本格式，但是对于信息的传输而言，可读性却是一项无用的功能。采用文本化的格式，是导致消息传递低效的重要原因。</p>
+<h5 id="2-缺乏强类型接口">(2) 缺乏强类型接口</h5>
+<p>​  微服务之间可以通过 RESTful 风格的接口进行交互，但是 RESTful 服务却没有定义强类型的服务接口。通俗来说，服务的提供者与服务的消费者需要“对接口”，这一点我的感受是非常强烈的，最近也在进行一个前后端交互的 Web 项目，其中就涉及到大量的前后端接口对接。我们采用的方案是使用一些接口定义方案(OpenAPI/Swagger)以及接口管理工具(Apifox、yapi)等等，总的使用感觉就是需要花费学习时间、撰写文档时间以及沟通交流时间。《grpc 与云原生应用开发》中说的非常好，&ldquo;RESTful 并没有与底层的架构风格或消息协议紧密集成在一起&rdquo;。其实 Swagger 以及相关接口管理工具都是一种事后补救的措施，来规则接口的类型定义。</p>
+<p> </p>
+<h4 id="22-thrift">2.2 Thrift</h4>
+<p>​  Apache Thrift 是类似 gRPC 的 RPC 框架，由 Facebook 开发，后期捐赠与 Apache。Thrift 有相应的接口定义语言同时提供了多编程语言的支持。可以在文件中定义数据类型和服务接口，同样支持生成客户端与服务端代码（可以发现 Thrift 与 gRPC 其实在某些方面非常相似，是否意味着现代的 RPC 框架都需要具有这些功能或者特点）。</p>
+<p>​  Thrift 独特的地方在于其传输层为网络 I/O 提供了抽象，可以将 Thrift 从系统中其他组件中解藕，可以在任意的传输实现上运行，如 TCP、HTTP 等。</p>
+<p> </p>
+<h4 id="23-graphql">2.3 GraphQL</h4>
+<p>​  这是我第二次听说 GraphQL 这个项目，第一次是听说，第二次是发现该项技术可以用在进程间通信。而且！似乎这项技术的应用逐渐扩大化，看来见识还是短浅了。该项目同样是 Facebook 发起并开源标准化的项目，这是一门针对 API 的查询语言。</p>
+<p>​  GraphQL 提供了一种允许客户端定义希望获得的数据、获取数据的方式以及数据格式的方法。由于时间的限制，仅仅是对该项目官网进行简单的了解，后期可以进行相关实验，深入查看一番。</p>
+<p>​  根据相关介绍，GraphQL 更适合面向外部的服务或者 API，这是其比较特殊的特性。</p>
+<p> </p>
+<h4 id="24-grpc-优势">2.4 gRPC 优势</h4>
+<p>​  其实也有一些常见的其他 RPC 框架，也有大概浏览一下，但是没有深入了解，就暂时只对比了 REST 与 gRPC 这两个功能相似却又不太一样的方案。从中其实可以发现 gRPC 存在的一些非常显著的优势。</p>
+<h5 id="1-通信效率高">(1) 通信效率高</h5>
+<p>​  效率高是 gRPC 框架的一个显著优点，采用<code>protocol buffers</code>的二进制方案，并且基于 HTTP/2 通信。</p>
+<h5 id="2-服务接口简单">(2) 服务接口简单</h5>
+<p>​  gRPC 通过<code>proto</code>文件预先定义服务接口以及消息类型，之后才能进行具体逻辑的开发，通过这种方式 gRPC 提供了简单且强类型的接口模式。</p>
+<h5 id="3-支持多语言">(3) 支持多语言</h5>
+<p>​  这可能不算是一个特别的优势，比如大多数的 RPC 框架以及 RESTful 架构等都支持多语言。可能早期的 java-dubbo 等只支持 java 语言。</p>
+<h5 id="4-支持双工流">(4) 支持双工流</h5>
+<p>​  基于 HTTP/2 的传输协议，gRPC 在服务端与客户端原生支持流，可以方便的开发流服务或流客户端。</p>
+<p> </p>
+<h4 id="25-grpc-劣势">2.5 gRPC 劣势</h4>
+<h5 id="1-不适合面向外部的服务">(1) 不适合面向外部的服务</h5>
+<p>​  gRPC 由于强类型的接口服务约束，限制了暴露服务的灵活性。一般来说，gRPC 更适合系统内部的服务交互，而对外暴露服务可能更适合通过 REST 或者 GraphQL 的方式进行。严格的来说，这并不算是 gRPC 的问题，只是应用场景的限制罢了，最多可以说是全面性不够。</p>
+<h5 id="2-服务定义变更复杂">(2) 服务定义变更复杂</h5>
+<p>​  由于 gRPC 服务定义的变更，可能需要重新生成服务端以及客户端的代码，进而影响到业务逻辑甚至是整个开发环境，因此服务定义变更是一件比较棘手或者复杂的事情。但是，通过前期严格规范、后期禁止破坏性变更以及通过版本升级规避变更的方式可以在一定程度上减轻服务定义变更带来的问题。</p>
+<p> 
+ </p>
+<h3 id="三-通信模式">三、 通信模式</h3>
+<h4 id="1-一元-rpc-模式">(1) 一元 RPC 模式</h4>
+<p>​  该模式下，客户端调用服务端的远程方法时，客户端发送请求至服务端并获取一个响应。基础内容中介绍的就是一元 RPC 模式，不再重复。</p>
+<h4 id="2-服务端客户端单向流模式">(2) 服务端、客户端单向流模式</h4>
+<p>​  该类模式下，服务端流则可以在接受到客户端的请求后，发送多个响应；客户端流可以发送多个请求。单向流模式下，需要在 rpc 服务定义中增加关键字<code>stream</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-protobuf" data-lang="protobuf"><span class="kd">service</span> <span class="n">foo1</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>	<span class="k">rpc</span> <span class="n">add</span><span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">stream</span> <span class="o">...</span><span class="p">)</span><span class="err">
+</span><span class="err"></span><span class="p">}</span><span class="err">
+</span><span class="err"></span><span class="c1">// 或
+</span><span class="c1"></span><span class="kd">service</span> <span class="n">foo2</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>	<span class="k">rpc</span> <span class="n">add</span><span class="p">(</span><span class="n">stream</span> <span class="o">...</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="err">
+</span><span class="err"></span><span class="p">}</span><span class="err">
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>单向流模式中，可以通过<code>stream.Send()</code>方法发送流消息，通过<code>stream.Recv()</code>方法来接受流消息，通过<code>return nil</code>来标记流结束并在接受端通过<code>err == io.EOF</code>判断流的结束</li>
+<li>对于服务端流模式，一定是在服务端收到客户端请求后才可以发送流；而对于客户端流模式，服务端不一定要等到从客户端接受所有的流消息后才发送响应，在收到任意数量流消息后均可以通过<code>stream.SendAndClose()</code>方法响应。</li>
+</ul>
+<h4 id="3-双向流-rpc-模式">(3) 双向流 RPC 模式</h4>
+<p>​ 在双向流 RPC 模式中，客户端以消息流的形式发送请求到服务端，服务端也以消息流的形式进行响应，但是调用必须由客户端发起。因此，双向流 RPC 是一种比较复杂但是很灵活的通信方式，客户端发起请求后，双方可以通过任意的交互顺序通信，这主要取决于逻辑代码的定义，并且双方也都可以在任意时间关闭流并告知对方。</p>
+<p> 
+ </p>
+<h3 id="四底层原理">四、底层原理</h3>
+<h3 id="五-相关配置">五、 相关配置</h3>
+<ol>
+<li>拦截器</li>
+<li>截止时间、取消</li>
+<li>多路复用</li>
+<li>安全性</li>
+<li>负载均衡</li>
+</ol>
+<h3 id="六-其他">六、 其他</h3>
+<p><a href="https://zh.wikipedia.org/wiki/%E4%BA%BA%E6%9C%88%E7%A5%9E%E8%AF%9D" target="_blank" rel="noopener noreffer">https://zh.wikipedia.org/wiki/%E4%BA%BA%E6%9C%88%E7%A5%9E%E8%AF%9D</a></p>
+<p><a href="https://doc.oschina.net/grpc?t=58008" target="_blank" rel="noopener noreffer">https://doc.oschina.net/grpc?t=58008</a></p>
+<p><a href="https://developers.google.com/protocol-buffers" target="_blank" rel="noopener noreffer">https://developers.google.com/protocol-buffers</a></p>
+<p><a href="https://www.ruanyifeng.com/blog/2011/09/restful.html" target="_blank" rel="noopener noreffer">https://www.ruanyifeng.com/blog/2011/09/restful.html</a></p>
+<p><a href="https://cloud.tencent.com/developer/article/1845449" target="_blank" rel="noopener noreffer">https://cloud.tencent.com/developer/article/1845449</a></p>
+<p><a href="https://grpc.io/docs/languages/go/quickstart/" target="_blank" rel="noopener noreffer">https://grpc.io/docs/languages/go/quickstart/</a></p>
+<p><a href="https://juejin.cn/post/6984961473378271245" target="_blank" rel="noopener noreffer">https://juejin.cn/post/6984961473378271245</a></p>
+<p><a href="https://thrift.apache.org/" target="_blank" rel="noopener noreffer">https://thrift.apache.org/</a></p>
+<p><a href="https://graphql.cn/learn/" target="_blank" rel="noopener noreffer">https://graphql.cn/learn/</a></p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-05-17</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://example.com/grpc/" data-title="GRPC" data-hashtags="RPC,HTTP2"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://example.com/grpc/" data-hashtag="RPC"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://example.com/grpc/" data-title="GRPC"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://example.com/grpc/" data-title="GRPC"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://example.com/grpc/" data-title="GRPC" data-image="/img/grpc-background.png"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/rpc/">RPC</a>,&nbsp;<a href="/tags/http2/">HTTP2</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/go%E8%AF%BB%E5%86%99%E9%94%81/" class="prev" rel="prev" title="Go读写锁"><i class="fas fa-angle-left fa-fw"></i>Go读写锁</a>
+            <a href="/daily/" class="next" rel="next" title="每日规划">每日规划<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">xxxx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.8/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":100},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
