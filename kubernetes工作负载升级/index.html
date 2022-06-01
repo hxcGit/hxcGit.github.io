@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Kubernetes工作负载升级 - 南北</title><meta name="Description" content="K8S workload update strategy"><meta property="og:title" content="Kubernetes工作负载升级" />
+<meta property="og:description" content="K8S workload update strategy" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.com/kubernetes%E5%B7%A5%E4%BD%9C%E8%B4%9F%E8%BD%BD%E5%8D%87%E7%BA%A7/" /><meta property="og:image" content="https://example.com/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-06-01T10:46:53+08:00" />
+<meta property="article:modified_time" content="2022-06-01T10:58:36+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://example.com/logo.png"/>
+
+<meta name="twitter:title" content="Kubernetes工作负载升级"/>
+<meta name="twitter:description" content="K8S workload update strategy"/>
+<meta name="application-name" content="南北你好">
+<meta name="apple-mobile-web-app-title" content="南北你好"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://example.com/kubernetes%E5%B7%A5%E4%BD%9C%E8%B4%9F%E8%BD%BD%E5%8D%87%E7%BA%A7/" /><link rel="prev" href="https://example.com/plugin%E6%9C%BA%E5%88%B6/" /><link rel="next" href="https://example.com/daily/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Kubernetes工作负载升级",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/example.com\/kubernetes%E5%B7%A5%E4%BD%9C%E8%B4%9F%E8%BD%BD%E5%8D%87%E7%BA%A7\/"
+        },"image": ["https:\/\/example.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "RollingUpdate, k8s","wordcount":  2112 ,
+        "url": "https:\/\/example.com\/kubernetes%E5%B7%A5%E4%BD%9C%E8%B4%9F%E8%BD%BD%E5%8D%87%E7%BA%A7\/","datePublished": "2022-06-01T10:46:53+08:00","dateModified": "2022-06-01T10:58:36+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": "https:\/\/example.com\/img\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "南北"
+            },"description": "K8S workload update strategy"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="南北"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>南北</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/categories/documentation/"> 文档 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/hxcGit" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/kubernetes%E5%B7%A5%E4%BD%9C%E8%B4%9F%E8%BD%BD%E5%8D%87%E7%BA%A7/" selected>简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="南北"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>南北</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/categories/documentation/" title="">文档</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/hxcGit" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/kubernetes%E5%B7%A5%E4%BD%9C%E8%B4%9F%E8%BD%BD%E5%8D%87%E7%BA%A7/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Kubernetes工作负载升级</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>南北</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/native-cloud/"><i class="far fa-folder fa-fw"></i>native cloud</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-06-01">2022-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2112 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;<span id="/kubernetes%E5%B7%A5%E4%BD%9C%E8%B4%9F%E8%BD%BD%E5%8D%87%E7%BA%A7/" class="leancloud_visitors" data-flag-title="Kubernetes工作负载升级">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/img/k8s-background.png"
+        data-srcset="/img/k8s-background.png, /img/k8s-background.png 1.5x, /img/k8s-background.png 2x"
+        data-sizes="auto"
+        alt="/img/k8s-background.png"
+        title="K8S workload update strategy" /></div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#kubernetes-常见工作负载升级方式">Kubernetes 常见工作负载升级方式</a>
+      <ul>
+        <li><a href="#一-deployment">一、 Deployment</a>
+          <ul>
+            <li><a href="#11-升级原理控制-replicaset">1.1 升级原理：控制 ReplicaSet</a></li>
+            <li><a href="#12-更新方式">1.2 更新方式</a>
+              <ul>
+                <li><a href="#1recreate-重建">（1）Recreate-重建</a></li>
+                <li><a href="#2rollingupdate-滚动更新">（2）RollingUpdate-滚动更新</a></li>
+              </ul>
+            </li>
+            <li><a href="#13-更新覆盖-rollover">1.3 更新覆盖 Rollover</a></li>
+            <li><a href="#14-暂停更新-pauseresume">1.4 暂停更新 pause/resume</a></li>
+          </ul>
+        </li>
+        <li><a href="#二-daemonset">二、 Daemonset</a>
+          <ul>
+            <li><a href="#21-更新方式">2.1 更新方式</a>
+              <ul>
+                <li><a href="#1ondelete-k8s-16-版本之前的更新方式">（1）OnDelete （k8s 1.6 版本之前的更新方式）</a></li>
+                <li><a href="#2rollingupdate-最新默认更新方式">（2）RollingUpdate （最新默认更新方式）</a></li>
+              </ul>
+            </li>
+            <li><a href="#22-更新触发">2.2 更新触发</a></li>
+            <li><a href="#23-检查状态">2.3 检查状态</a></li>
+          </ul>
+        </li>
+        <li><a href="#三-statefulset">三、 StatefulSet</a>
+          <ul>
+            <li><a href="#31-更新方式">3.1 更新方式</a>
+              <ul>
+                <li><a href="#1ondelete">（1）OnDelete</a></li>
+                <li><a href="#2rollingupdates">（2）RollingUpdates</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#四-发布方式">四、 发布方式</a></li>
+        <li><a href="#五-daemonset-更新阻塞实验">五、 daemonset 更新阻塞实验</a>
+          <ul>
+            <li>
+              <ul>
+                <li><a href="#1创建-daemonset-应用">（1）创建 Daemonset 应用</a></li>
+                <li><a href="#2iptables-断开-edge1edge2-至集群连接">（2）iptables 断开 edge1、edge2 至集群连接</a></li>
+                <li><a href="#3kubectl-edit更新spectemplatespeccontainersimage">（3）<code>kubectl edit</code>更新<code>.spec.template.spec.containers.image</code></a></li>
+                <li><a href="#4-kubectl-rollout-status检查更新状态升级一直阻塞">（4） <code>kubectl rollout status</code>检查更新状态，升级一直阻塞</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="kubernetes-常见工作负载升级方式">Kubernetes 常见工作负载升级方式</h2>
+<h3 id="一-deployment">一、 Deployment</h3>
+<h4 id="11-升级原理控制-replicaset">1.1 升级原理：控制 ReplicaSet</h4>
+<ul>
+<li>通过新旧 ReplicaSet 不断的<code>Scale up</code>和<code>Scale down</code></li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://blog.cdn.updev.cn/2019-12-17-CleanShot%202019-12-17%20at%2013.15.00%402x.png"
+        data-srcset="https://blog.cdn.updev.cn/2019-12-17-CleanShot%202019-12-17%20at%2013.15.00%402x.png, https://blog.cdn.updev.cn/2019-12-17-CleanShot%202019-12-17%20at%2013.15.00%402x.png 1.5x, https://blog.cdn.updev.cn/2019-12-17-CleanShot%202019-12-17%20at%2013.15.00%402x.png 2x"
+        data-sizes="auto"
+        alt="https://blog.cdn.updev.cn/2019-12-17-CleanShot%202019-12-17%20at%2013.15.00%402x.png"
+        title="img" /></p>
+<h4 id="12-更新方式">1.2 更新方式</h4>
+<h5 id="1recreate-重建">（1）Recreate-重建</h5>
+<ul>
+<li>通过<code>Scale down</code>删除旧 ReplicaSet 的全部 Pods，然后通过<code>Scale up</code>创建新 ReplicaSet 的 Pods</li>
+</ul>
+<h5 id="2rollingupdate-滚动更新">（2）RollingUpdate-滚动更新</h5>
+<ul>
+<li>
+<p>根据<code>maxUnavailable</code>和<code>maxSurge</code>的配置，删除一部分旧 Pod、创建一部分新 Pod，滚动式更新</p>
+</li>
+<li>
+<p><code>maxUnavailable</code></p>
+<ul>
+<li>表示在更新过程中能够进入不可用状态的 Pod 的最大值</li>
+<li>可以是数字，也可以是百分比，默认是 25%</li>
+</ul>
+</li>
+<li>
+<p><code>maxSurge</code></p>
+<ul>
+<li>表示能够额外创建的 Pod 个数</li>
+<li>可以是数字，也可以是百分比，默认是 25%</li>
+</ul>
+</li>
+<li>
+<p><code>spec.min.Ready.Seconds</code> 控制升级速度</p>
+<ul>
+<li>Pod ready 状态持续该时间后，此 pod 才被认为是 available, deployment 会等待 pod available 后才继续推进升级流程</li>
+<li>如果没有设置该值，K8S 会假设该容器启动后就提供服务，在某些极端情况下可能会造成服务无法正常运行</li>
+</ul>
+</li>
+</ul>
+<h4 id="13-更新覆盖-rollover">1.3 更新覆盖 Rollover</h4>
+<ul>
+<li>Deployment 支持在上一次更新尚未完成的时候，提交一个新的更新</li>
+<li>更新的流程会被覆盖，deployment 不会等待上一次的更新完成后再执行新的更新，而是会直接执行最新的更新任务，将上次更新创建的 ReplicaSet pod 视为旧 Pod</li>
+</ul>
+<h4 id="14-暂停更新-pauseresume">1.4 暂停更新 pause/resume</h4>
+<ul>
+<li>可以避免频繁触发更新操作，实现一次性触发完整的更新操作</li>
+<li>暂停只会影响下一轮的<code>scale up</code>或<code>scale down</code>，该轮已经执行的<code>Scale</code>操作会执行完</li>
+</ul>
+<p> </p>
+<h3 id="二-daemonset">二、 Daemonset</h3>
+<h4 id="21-更新方式">2.1 更新方式</h4>
+<h5 id="1ondelete-k8s-16-版本之前的更新方式">（1）OnDelete （k8s 1.6 版本之前的更新方式）</h5>
+<ul>
+<li>只有手动删除旧 Pod 之后，新的 Pod 才会被创建</li>
+<li>若集群中节点数较多，手动操作删除人工参与工作量较大</li>
+</ul>
+<h5 id="2rollingupdate-最新默认更新方式">（2）RollingUpdate （最新默认更新方式）</h5>
+<ul>
+<li><code>maxUnavailable</code>
+<ul>
+<li>滚动更新时允许的最大<code>unavailable</code>pod 数量，默认值为 1</li>
+</ul>
+</li>
+<li><code>maxSurge</code>
+<ul>
+<li>滚动更新时允许额外创建的 pod 数量，默认值为 1</li>
+<li>默认 Daemonset 更新的方式应该是先删除再创建，<code>maxSurge</code>是 K8S 1.21 Beta 的新特性，可以使更新过程更加灵活，实现<code>add first, then delete</code>的滚动更新流程</li>
+</ul>
+</li>
+</ul>
+<h4 id="22-更新触发">2.2 更新触发</h4>
+<p>DaemonSet 的 <code>.spec.template</code> 的任何更新都将触发滚动更新，可以采用的方式如下：</p>
+<ol>
+<li>
+<p><code>kubectl apply yaml</code></p>
+</li>
+<li>
+<p><code>kubectl edit ds</code></p>
+</li>
+<li>
+<p><code>kubectl set image ds</code></p>
+</li>
+</ol>
+<h4 id="23-检查状态">2.3 检查状态</h4>
+<ul>
+<li>更新操作执行后，仅能看到一条提示<code>daemonset.apps/foo-daemonset configured</code></li>
+<li>通过<code>kubectl rollout status ds</code>，<code>kubectl describe ds foo</code>等操作来确认更新状态</li>
+<li>更新过程若出现问题，也可以通过<code>kubectl logs kube-controller-manager-xxx</code>查看 kube-controller-manager 组件的日志查看问题（容器部署），详细日志需要将<code>/etc/kubernetes/manifests/kube-controller-manager.yaml</code>中日志等级设置为<code>--v=4</code>，修改后 kube-controller-manager 容器会重启</li>
+</ul>
+<p> </p>
+<h3 id="三-statefulset">三、 StatefulSet</h3>
+<ul>
+<li>K8S 1.7 之后可以通过<code>.spec.updateStrategy</code>字段来设置 statefulSet 的更新策略</li>
+</ul>
+<h4 id="31-更新方式">3.1 更新方式</h4>
+<h5 id="1ondelete">（1）OnDelete</h5>
+<ul>
+<li>类似 Daemosnet，手动删除 pod 后，才会创建新 pod</li>
+</ul>
+<h5 id="2rollingupdates">（2）RollingUpdates</h5>
+<ul>
+<li>从序号最大的 Pod 开始，逐个删除和更新每一个 Pod，直到序号最小的 Pod 被更新</li>
+<li>当正在更新的 Pod 达到了 Running 和 Ready 的状态之后，才继续更新下一个 pod
+<ul>
+<li><strong>Partitioned</strong>
+<ul>
+<li>通过<code>Partition</code>参数可以实现分段更新
+<ul>
+<li>序号大于等于<code>partition</code>的 pods 会被更新</li>
+<li>序号小于<code>partition</code>的 pods 不会被更新</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Note: 若在 Stateful 更新的过程中配置存在问题，更新会失败，这时即使更新配置也不会继续更新，需要等待异常 POD 恢复正常，因此需要手动删除异常 POD</p>
+<p> </p>
+<h3 id="四-发布方式">四、 发布方式</h3>
+<ul>
+<li>目前 K8S 工作负载仅支持类似<code>OnDelete</code>与<code>RollingUpdates</code>的比较基础的应用更新方式</li>
+<li>若希望实现蓝绿发布、A/B 测试发布以及灰步发布等较为高级复杂的应用发布方式，需要采取其他手段
+<ul>
+<li>手动基于现有更新方式实现，比如创建两个 deployment，以不同流量比实现灰步发布；statefulset 通过<code>partitioned</code>方式实现</li>
+<li>采用开源增强解决方案，比如 OpenKruise、argo-rollouts 以及 flagger 等</li>
+</ul>
+</li>
+</ul>
+<p> </p>
+<h3 id="五-daemonset-更新阻塞实验">五、 daemonset 更新阻塞实验</h3>
+<p>Node 节点与集群网络连接断开，会导致 Node 状态变为 NotReady，此时系统会自动为该 Node 打上污点<code>node.kubernetes.io unreachable:NoExecute</code>与<code>node.kubernetes.io/unreachable:NoSchedule</code>，而 daemonset 创建的 Pod 会自动打上容忍度<code>node.kubernetes.io/unreachable:NoExecute</code>，如果有额外的设置，使得 ds 的 pod 容忍 node 污点时，更新 daemonset 应用负载会出现阻塞情况，主要问题是 daemonset 滚动更新会先删除旧 pod，然后创建新的 pod，而 NotReady 的 Node 的 Pod 处于 Terminating 状态并且无法删除，会被认为是不可用 Pod，当不可用 Pod 数大于<code>maxUnavailable</code>，则直接跳过升级过程。</p>
+<p>​  通过实验复现该问题，主要思路是，创建 Daemonset 应用，然后断开某些 Node 节点网络连接，更新 Daemonset 应用，查看更新状态。</p>
+<blockquote>
+<p>实验环境</p>
+<p>Kubernetes verions： 1.18</p>
+<p>1 Cloud master node + 4 Edge Nodes by kubeadm</p>
+<p>Image： nginx: 1.14.1 -&gt; nginx:1.14.2</p>
+</blockquote>
+<h5 id="1创建-daemonset-应用">（1）创建 Daemonset 应用</h5>
+<ul>
+<li>node 节点</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/img/image-20220601020508462.png"
+        data-srcset="/img/image-20220601020508462.png, /img/image-20220601020508462.png 1.5x, /img/image-20220601020508462.png 2x"
+        data-sizes="auto"
+        alt="/img/image-20220601020508462.png"
+        title="image-20220601020508462" /></p>
+<ul>
+<li>nginx-daemonset.yaml 配置文件</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apps/v1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">DaemonSet</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nginx-daemonset</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
+</span><span class="w">  </span><span class="nt">minReadySeconds</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span><span class="w">  </span><span class="nt">updateStrategy</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">RollingUpdate</span><span class="w">
+</span><span class="w">    </span><span class="nt">rollingUpdate</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">maxUnavailable</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
+</span><span class="w">    </span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">tolerations</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- <span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="l">Exists</span><span class="w">
+</span><span class="w">      </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
+</span><span class="w">          </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">nginx:1.14.1</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>创建应用，查看 pod</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/img/image-20220601023341831.png"
+        data-srcset="/img/image-20220601023341831.png, /img/image-20220601023341831.png 1.5x, /img/image-20220601023341831.png 2x"
+        data-sizes="auto"
+        alt="/img/image-20220601023341831.png"
+        title="image-20220601023341831" /></p>
+<h5 id="2iptables-断开-edge1edge2-至集群连接">（2）iptables 断开 edge1、edge2 至集群连接</h5>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/img/image-20220601023850144.png"
+        data-srcset="/img/image-20220601023850144.png, /img/image-20220601023850144.png 1.5x, /img/image-20220601023850144.png 2x"
+        data-sizes="auto"
+        alt="/img/image-20220601023850144.png"
+        title="image-20220601023850144" /></p>
+<h5 id="3kubectl-edit更新spectemplatespeccontainersimage">（3）<code>kubectl edit</code>更新<code>.spec.template.spec.containers.image</code></h5>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/img/image-20220601025030778.png"
+        data-srcset="/img/image-20220601025030778.png, /img/image-20220601025030778.png 1.5x, /img/image-20220601025030778.png 2x"
+        data-sizes="auto"
+        alt="/img/image-20220601025030778.png"
+        title="image-20220601025030778" /></p>
+<h5 id="4-kubectl-rollout-status检查更新状态升级一直阻塞">（4） <code>kubectl rollout status</code>检查更新状态，升级一直阻塞</h5>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/img/image-20220601025115746.png"
+        data-srcset="/img/image-20220601025115746.png, /img/image-20220601025115746.png 1.5x, /img/image-20220601025115746.png 2x"
+        data-sizes="auto"
+        alt="/img/image-20220601025115746.png"
+        title="image-20220601025115746" /></p>
+<ul>
+<li>查看<code>cube-controller-manager</code>日志</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/img/image-20220601025311347.png"
+        data-srcset="/img/image-20220601025311347.png, /img/image-20220601025311347.png 1.5x, /img/image-20220601025311347.png 2x"
+        data-sizes="auto"
+        alt="/img/image-20220601025311347.png"
+        title="image-20220601025311347" /></p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-06-01</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://example.com/kubernetes%E5%B7%A5%E4%BD%9C%E8%B4%9F%E8%BD%BD%E5%8D%87%E7%BA%A7/" data-title="Kubernetes工作负载升级" data-hashtags="RollingUpdate,k8s"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://example.com/kubernetes%E5%B7%A5%E4%BD%9C%E8%B4%9F%E8%BD%BD%E5%8D%87%E7%BA%A7/" data-hashtag="RollingUpdate"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://example.com/kubernetes%E5%B7%A5%E4%BD%9C%E8%B4%9F%E8%BD%BD%E5%8D%87%E7%BA%A7/" data-title="Kubernetes工作负载升级"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://example.com/kubernetes%E5%B7%A5%E4%BD%9C%E8%B4%9F%E8%BD%BD%E5%8D%87%E7%BA%A7/" data-title="Kubernetes工作负载升级"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://example.com/kubernetes%E5%B7%A5%E4%BD%9C%E8%B4%9F%E8%BD%BD%E5%8D%87%E7%BA%A7/" data-title="Kubernetes工作负载升级" data-image="/img/k8s-background.png"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/rollingupdate/">RollingUpdate</a>,&nbsp;<a href="/tags/k8s/">k8s</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/plugin%E6%9C%BA%E5%88%B6/" class="prev" rel="prev" title="Plugin机制"><i class="fas fa-angle-left fa-fw"></i>Plugin机制</a>
+            <a href="/daily/" class="next" rel="next" title="每日规划">每日规划<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">xxxx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.8/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":100},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

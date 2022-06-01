@@ -3,7 +3,7 @@
         <title>南北</title>
         <link>https://example.com/</link>
         <description>南北的个人博客</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 19 May 2022 14:42:03 &#43;0800</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 01 Jun 2022 10:46:53 &#43;0800</lastBuildDate>
             <atom:link href="https://example.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
     <title>每日规划</title>
@@ -14,6 +14,15 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/img/dailyPlan-background.png" referrerpolicy="no-referrer">
             </div>文章描述]]></description>
+</item><item>
+    <title>Kubernetes工作负载升级</title>
+    <link>https://example.com/kubernetes%E5%B7%A5%E4%BD%9C%E8%B4%9F%E8%BD%BD%E5%8D%87%E7%BA%A7/</link>
+    <pubDate>Wed, 01 Jun 2022 10:46:53 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://example.com/kubernetes%E5%B7%A5%E4%BD%9C%E8%B4%9F%E8%BD%BD%E5%8D%87%E7%BA%A7/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/img/k8s-background.png" referrerpolicy="no-referrer">
+            </div>K8S workload update strategy]]></description>
 </item><item>
     <title>Plugin机制</title>
     <link>https://example.com/plugin%E6%9C%BA%E5%88%B6/</link>
@@ -86,14 +95,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/img/git-background.png" referrerpolicy="no-referrer">
             </div>git标签相关内容]]></description>
-</item><item>
-    <title>Paxos</title>
-    <link>https://example.com/paxos/</link>
-    <pubDate>Tue, 22 Mar 2022 13:18:18 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://example.com/paxos/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/img/paxos-background.png" referrerpolicy="no-referrer">
-            </div>Paxos分布式算法学习]]></description>
 </item></channel>
 </rss>
